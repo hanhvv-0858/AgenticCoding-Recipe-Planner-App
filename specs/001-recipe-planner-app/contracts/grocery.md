@@ -1,0 +1,272 @@
+# Grocery API Contracts
+
+**Base**: `/api/grocery`
+**Related Spec**: FR-016 through FR-022, FR-024
+
+---
+
+## GET `/grocery`
+
+Get the grocery list for a specific week. Auto-generates from meal plan if not cached.
+
+**Auth**: Required
+
+### Query Parameters
+
+| Param | Type | Required | Description |
+|-------|------|----------|-------------|
+| `week_start` | string (YYYY-MM-DD) | Yes | Monday of the target week |
+| `regenerate` | boolean | No | Force regeneration from current meal plan (default: false) |
+
+### Request Example
+
+```
+GET /api/grocery?week_start=2026-02-23
+```
+
+### Response
+
+**200 OK**:
+```json
+{
+  "week_start": "2026-02-23",
+  "categories": [
+    {
+      "name": "Vegetables",
+      "emoji": "🥦",
+      "items": [
+        {
+          "id": "uuid",
+          "name": "Garlic",
+          "quantity": 5,
+          "unit": "cloves",
+          "source_recipes": ["Beef Stir-Fry", "Grilled Salmon"],
+          "is_checked": false,
+          "is_manual": false
+        },
+        {
+          "id": "uuid",
+          "name": "Broccoli",
+          "quantity": 2,
+          "unit": "heads",
+          "source_recipes": ["Beef Stir-Fry"],
+          "is_checked": true,
+          "is_manual": false
+        }
+      ]
+    },
+    {
+      "name": "Meat/Fish",
+      "emoji": "🥩",
+      "items": [
+        {
+          "id": "uuid",
+          "name": "Salmon fillet",
+          "quantity": 4,
+          "unit": "pieces",
+          "source_recipes": ["Grilled Salmon"],
+          "is_checked": false,
+          "is_manual": false
+        }
+      ]
+    },
+    {
+      "name": "Spices",
+      "emoji": "🥫",
+      "items": [
+        {
+          "id": "uuid",
+          "name": "Soy sauce",
+          "quantity": 4,
+          "unit": "tablespoons",
+          "source_recipes": ["Beef Stir-Fry"],
+          "is_checked": false,
+          "is_manual": false
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "emoji": "📦",
+      "items": [
+        {
+          "id": "uuid",
+          "name": "Paper towels",
+          "quantity": 1,
+          "unit": "roll",
+          "source_recipes": [],
+          "is_checked": false,
+          "is_manual": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_items": 5,
+    "checked_items": 1,
+    "remaining_items": 4
+  }
+}
+```
+
+**Notes**:
+- Items are grouped by category and sorted alphabetically within each category.
+- `summary.remaining_items` is used for the Grocery tab badge (FR-024).
+- Ingredients with the same normalized name and compatible units are merged with summed quantities.
+- `source_recipes` is empty for manually-added items.
+- If `regenerate=true`, existing auto-generated items are replaced but manual items are preserved.
+
+---
+
+## POST `/grocery`
+
+Manually add a custom grocery item.
+
+**Auth**: Required
+
+### Request
+
+```json
+{
+  "name": "Paper towels",
+  "quantity": 1,
+  "unit": "roll",
+  "category": "Other",
+  "week_start": "2026-02-23"
+}
+```
+
+**Validation (Zod)**:
+```typescript
+z.object({
+  name: z.string().min(1).max(100),
+  quantity: z.number().positive(),
+  unit: z.string().min(1).max(30),
+  category: z.enum([
+    'Vegetables', 'Fruits', 'Meat/Fish', 'Dairy',
+    'Spices', 'Grains', 'Canned', 'Frozen',
+    'Beverages', 'Other'
+  ]).default('Other'),
+  week_start: z.string().regex(/^\d{4}-\d{2}-\d{2}$/)
+})
+```
+
+### Response
+
+**201 Created**:
+```json
+{
+  "id": "uuid",
+  "name": "Paper towels",
+  "quantity": 1,
+  "unit": "roll",
+  "category": "Other",
+  "source_recipes": [],
+  "is_checked": false,
+  "is_manual": true
+}
+```
+
+---
+
+## PATCH `/grocery/:id`
+
+Toggle the checked/purchased status of a grocery item.
+
+**Auth**: Required
+
+### Request
+
+```json
+{
+  "is_checked": true
+}
+```
+
+### Response
+
+**200 OK**:
+```json
+{
+  "id": "uuid",
+  "name": "Garlic",
+  "quantity": 5,
+  "unit": "cloves",
+  "is_checked": true
+}
+```
+
+---
+
+## DELETE `/grocery/:id`
+
+Delete a single grocery item.
+
+**Auth**: Required
+
+### Response
+
+**204 No Content**
+
+---
+
+## DELETE `/grocery/clear`
+
+Clear all checked (purchased) items for a specific week.
+
+**Auth**: Required
+
+### Query Parameters
+
+| Param | Type | Required | Description |
+|-------|------|----------|-------------|
+| `week_start` | string (YYYY-MM-DD) | Yes | Week to clear checked items from |
+
+### Request Example
+
+```
+DELETE /api/grocery/clear?week_start=2026-02-23
+```
+
+### Response
+
+**200 OK**:
+```json
+{
+  "cleared_count": 3,
+  "remaining_count": 5
+}
+```
+
+---
+
+## Share Format (Client-Side)
+
+The share functionality (FR-021) is handled client-side via native OS share sheet. The text format:
+
+```
+🛒 Grocery List — Week of Feb 23
+
+🥦 Vegetables
+  □ Garlic — 5 cloves
+  □ Broccoli — 2 heads
+  □ Bell pepper — 3 pieces
+
+🥩 Meat/Fish
+  □ Salmon fillet — 4 pieces
+  □ Chicken breast — 800 grams
+
+🥫 Spices
+  □ Soy sauce — 4 tablespoons
+  □ Fresh dill — 4 tablespoons
+
+📦 Other
+  □ Paper towels — 1 roll
+
+Total: 8 items
+```
+
+**Notes**:
+- Checked items are excluded from the shared list.
+- Format uses unicode checkboxes for readability across messaging apps.
+- Generated by Flutter client from the grocery list state — no API call needed.

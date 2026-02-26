@@ -1,0 +1,119 @@
+{
+  "@@locale": "en",
+  "appTitle": "Recipe Planner",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+
+  "homeTab": "Home",
+  "cookbookTab": "Cookbook",
+  "plannerTab": "Planner",
+  "groceryTab": "Grocery",
+  "profileTab": "Profile",
+
+  "searchHint": "Search recipes...",
+  "trendingTitle": "Trending Recipes",
+  "nextMealTitle": "Next Meal",
+  "tagsTitle": "Categories",
+
+  "recipeDetail": "Recipe Detail",
+  "ingredients": "Ingredients",
+  "steps": "Steps",
+  "servings": "{count} servings",
+  "@servings": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cookingTime": "{minutes} min",
+  "@cookingTime": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "calories": "{count} cal",
+  "@calories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNotAvailable": "N/A",
+  "instructionsComingSoon": "Instructions coming soon",
+  "saveRecipe": "Save to cookbook",
+  "removeFromCookbook": "Remove from cookbook",
+  "addToMealPlan": "Add to meal plan",
+  "startCooking": "Start Cooking",
+
+  "myCookbook": "My Cookbook",
+  "noSavedRecipes": "No Saved Recipes",
+  "noSavedRecipesSubtitle": "Save recipes you love to build your personal cookbook.",
+  "exploreRecipes": "Explore Recipes",
+
+  "mealPlanner": "Meal Planner",
+  "noMealPlans": "No Meal Plans Yet",
+  "noMealPlansSubtitle": "Plan your meals for the week to stay organized.",
+  "createPlan": "Create Plan",
+  "breakfast": "Breakfast",
+  "lunch": "Lunch",
+  "dinner": "Dinner",
+  "snack": "Snack",
+
+  "groceryList": "Grocery List",
+  "noGroceryItems": "No Grocery Items",
+  "noGroceryItemsSubtitle": "Add recipes to your meal plan to auto-generate a grocery list.",
+  "goToPlanner": "Go to Planner",
+  "clearCompleted": "Clear Completed",
+  "shareList": "Share List",
+  "addItem": "Add Item",
+  "itemName": "Item Name",
+  "quantity": "Quantity",
+  "unit": "Unit",
+  "category": "Category",
+
+  "profile": "Profile",
+  "guestMode": "Guest Mode",
+  "guestModeSubtitle": "Sign in to sync your recipes, meal plans, and grocery lists across devices.",
+  "signIn": "Sign In",
+  "signOut": "Sign Out",
+  "signOutConfirm": "Are you sure you want to sign out?",
+  "cancel": "Cancel",
+  "createAccount": "Create Account",
+  "continueAsGuest": "Continue as Guest",
+
+  "email": "Email",
+  "emailHint": "Enter your email",
+  "emailRequired": "Email is required",
+  "emailInvalid": "Please enter a valid email",
+  "password": "Password",
+  "passwordHint": "Enter your password",
+  "passwordRequired": "Password is required",
+  "passwordTooShort": "Password must be at least 8 characters",
+  "displayName": "Display Name",
+  "displayNameHint": "Enter your name",
+  "displayNameRequired": "Display name is required",
+
+  "loginTitle": "Sign in to your account",
+  "registerTitle": "Join Recipe Planner today",
+  "noAccount": "Don't have an account? ",
+  "alreadyHaveAccount": "Already have an account? ",
+
+  "error": "Error",
+  "retry": "Retry",
+  "offline": "You are offline. Changes saved locally.",
+  "syncing": "Syncing your changes...",
+  "syncComplete": "All changes synced",
+
+  "editProfile": "Edit Profile",
+  "notifications": "Notifications",
+  "theme": "Theme",
+  "language": "Language",
+  "appVersion": "App Version",
+  "termsOfService": "Terms of Service",
+  "privacyPolicy": "Privacy Policy"
+}

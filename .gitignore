@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Next.js
+backend/.next/
+backend/out/
+
+# Environment
+backend/.env
+backend/.env.local
+backend/.env.*.local
+
+# Flutter
+app/.dart_tool/
+app/build/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/.packages
+app/.pub-cache/
+app/.pub/
+app/.env
+
+# IDE
+.vscode/settings.json
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+
+# Testing
+coverage/
+backend/coverage/
+
+# Generated
+app/**/*.g.dart
+app/**/*.freezed.dart
+
+# Logs
+*.log
+npm-debug.log*

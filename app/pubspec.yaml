@@ -1,0 +1,64 @@
+name: recipe_planner
+description: "Recipe Planner App - Meal Plan & Grocery List"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.5
+
+  # Navigation
+  go_router: ^14.2.0
+
+  # Dependency Injection
+  get_it: ^7.7.0
+
+  # Functional Programming
+  dartz: ^0.10.1
+
+  # Network
+  dio: ^5.4.3+1
+  connectivity_plus: ^6.0.3
+
+  # Supabase
+  supabase_flutter: ^2.5.6
+
+  # Local Database
+  drift: ^2.18.0
+  sqlite3_flutter_libs: ^0.5.21
+
+  # Image
+  cached_network_image: ^3.3.1
+  flutter_image_compress: ^2.3.0
+
+  # Serialization
+  json_annotation: ^4.9.0
+
+  # Sharing
+  share_plus: ^12.0.1
+
+  # Environment
+  flutter_dotenv: ^5.1.0
+  intl: ^0.20.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.11
+  json_serializable: ^6.8.0
+  drift_dev: ^2.18.0
+  bloc_test: ^9.1.7
+  mocktail: ^1.0.3
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
